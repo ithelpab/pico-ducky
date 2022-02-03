@@ -112,6 +112,14 @@ progStatusPin.switch_to_input(pull=digitalio.Pull.UP)
 progStatus = not progStatusPin.value
 defaultDelay = 0
 
+# check GP5 for Alternate PayLoad mode
+# see setup mode for instructions
+progStatus5 = False
+progStatusPin5 = digitalio.DigitalInOut(GP5)
+progStatusPin5.switch_to_input(pull=digitalio.Pull.UP)
+progStatus5 = not progStatusPin5.value
+defaultDelay = 0
+
 def runScript(file):
     global defaultDelay
 
@@ -137,5 +145,16 @@ if(progStatus == False):
     runScript("payload.dd")
 
     print("Done")
+
+else:
+    print("Update your payload")
+
+if(progStatus5 == False):
+    # not in setup mode, inject the payload
+    print("Running payload5.dd")
+    runScript("payload5.dd")
+
+    print("Done")
+
 else:
     print("Update your payload")
